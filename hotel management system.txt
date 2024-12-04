@@ -1,0 +1,148 @@
+import java.awt.*;
+import java.awt.event.*;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+
+// Main Class
+public class HotelManagementSystem extends Frame implements ActionListener {
+    // Declare Components
+    Label heading;
+    Button roomBtn, bookingBtn, userBtn, billingBtn, reportBtn, exitBtn;
+    TextArea outputArea;
+
+    // Sample data storage
+    ArrayList<String> rooms = new ArrayList<>();
+    ArrayList<String> bookings = new ArrayList<>();
+    ArrayList<String> users = new ArrayList<>();
+
+    public HotelManagementSystem() {
+        // Frame Setup
+        setTitle("Hotel Management System");
+        setSize(800, 500);
+        setLayout(null);
+        setBackground(Color.lightGray);
+
+        // Heading
+        heading = new Label("Hotel Management System", Label.CENTER);
+        heading.setFont(new Font("Arial", Font.BOLD, 24));
+        heading.setBounds(200, 50, 400, 30);
+        add(heading);
+
+        // Buttons for modules
+        roomBtn = new Button("Room Management");
+        roomBtn.setBounds(100, 120, 200, 40);
+        roomBtn.addActionListener(this);
+        add(roomBtn);
+
+        bookingBtn = new Button("Booking Management");
+        bookingBtn.setBounds(100, 180, 200, 40);
+        bookingBtn.addActionListener(this);
+        add(bookingBtn);
+
+        userBtn = new Button("User Management");
+        userBtn.setBounds(100, 240, 200, 40);
+        userBtn.addActionListener(this);
+        add(userBtn);
+
+        billingBtn = new Button("Billing Management");
+        billingBtn.setBounds(100, 300, 200, 40);
+        billingBtn.addActionListener(this);
+        add(billingBtn);
+
+        reportBtn = new Button("Report Generation");
+        reportBtn.setBounds(100, 360, 200, 40);
+        reportBtn.addActionListener(this);
+        add(reportBtn);
+
+        exitBtn = new Button("Exit");
+        exitBtn.setBounds(350, 420, 100, 40);
+        exitBtn.addActionListener(this);
+        add(exitBtn);
+
+        // Output Area
+        outputArea = new TextArea("", 5, 50, TextArea.SCROLLBARS_VERTICAL_ONLY);
+        outputArea.setBounds(350, 120, 400, 300);
+        outputArea.setEditable(false);
+        add(outputArea);
+
+        // Add Window Listener for Closing
+        addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                System.exit(0);
+            }
+        });
+    }
+
+    // Event Handling
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == roomBtn) {
+            manageRooms();
+        } else if (e.getSource() == bookingBtn) {
+            manageBookings();
+        } else if (e.getSource() == userBtn) {
+            manageUsers();
+        } else if (e.getSource() == billingBtn) {
+            manageBilling();
+        } else if (e.getSource() == reportBtn) {
+            generateReports();
+        } else if (e.getSource() == exitBtn) {
+            System.exit(0);
+        }
+    }
+
+    // Room Management Module
+    private void manageRooms() {
+        String roomNumber = JOptionPane.showInputDialog(this, "Enter Room Number:");
+        String roomType = JOptionPane.showInputDialog(this, "Enter Room Type (Single/Double):");
+        rooms.add("Room " + roomNumber + ": " + roomType);
+        outputArea.setText("Room Management:\n");
+        for (String room : rooms) {
+            outputArea.append(room + "\n");
+        }
+    }
+
+    // Booking Management Module
+    private void manageBookings() {
+        String roomNumber = JOptionPane.showInputDialog(this, "Enter Room Number:");
+        String guestName = JOptionPane.showInputDialog(this, "Enter Guest Name:");
+        bookings.add("Booking: Room " + roomNumber + " - " + guestName);
+        outputArea.setText("Booking Management:\n");
+        for (String booking : bookings) {
+            outputArea.append(booking + "\n");
+        }
+    }
+
+    // User Management Module
+    private void manageUsers() {
+        String userName = JOptionPane.showInputDialog(this, "Enter User Name:");
+        String userType = JOptionPane.showInputDialog(this, "Enter User Type (Customer/Staff):");
+        users.add("User: " + userName + " - " + userType);
+        outputArea.setText("User Management:\n");
+        for (String user : users) {
+            outputArea.append(user + "\n");
+        }
+    }
+
+    // Billing Management Module
+    private void manageBilling() {
+        outputArea.setText("Billing Management:\n");
+        outputArea.append("Invoice for Booking:\n");
+        outputArea.append("Room: $100\n");
+        outputArea.append("Total: $100\n");
+    }
+
+    // Report Generation Module
+    private void generateReports() {
+        outputArea.setText("Report Generation:\n");
+        outputArea.append("Total Bookings: " + bookings.size() + "\n");
+        outputArea.append("Total Rooms: " + rooms.size() + "\n");
+        outputArea.append("Total Users: " + users.size() + "\n");
+    }
+
+    // Main Method
+    public static void main(String[] args) {
+        HotelManagementSystem hms = new HotelManagementSystem();
+        hms.setVisible(true);
+    }
+}
